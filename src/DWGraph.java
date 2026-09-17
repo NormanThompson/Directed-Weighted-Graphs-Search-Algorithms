@@ -106,7 +106,7 @@ public class DWGraph {
     /**
      *deletes a node from the graph
      *@param key  the node to be removed
-     *@return String  the keu that was removed (or null if not)
+     *@return String  the key that was removed (or null if not)
      */
     public String delete(String key) {
         String result = graph.delete(key);
@@ -172,7 +172,7 @@ public class DWGraph {
      *gives the weight of a single edge
      *@param src  the source of the edge
      *@param dest the destination of the edge
-     *@return double  the weight of the removed edge
+     *@return double  the weight of the requested edge
      */
     public Double weight(String src, String dest) {
         return graph.weight(src, dest);
@@ -220,17 +220,15 @@ public class DWGraph {
 
     /**
      * This method returns a Path from some src to dest, deciding which of the three algorithms
-     * to use based on the inpout. if the input is for all pairs shortest paths, we run floyd warshall if there
-     * are no negative edge weights. if the input is from a single src to dest, then we run bellman ford
-     * if there are negative edge weights and dijkstras if not.
+     * to use based on the inpout. if the input is for all pairs shortest paths, we run floyd warshall.
+     * if the input is from a single src to dest, then we run bellman ford
+     * if there are negative edge weights, and dijkstras if not.
      * @param src the source of the search
      * @param dest the destination of the path
      * @return path record containing shortest path, total cost, source, dest
      */
     public Search.Path search(String src, String dest) {
-        if (src.equals("<ALL>") && dest.equals("<ALL>") && hasNegativeEdgeWeights()) {
-            return null;
-        } else if (src.equals("<ALL>") && dest.equals("<ALL>")) {
+        if (src.equals("<ALL>") && dest.equals("<ALL>")) {
             strategy = new FloydWarshall();
         } else if (hasNegativeEdgeWeights()) {
             strategy = new BellmanFord();
